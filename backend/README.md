@@ -91,8 +91,6 @@ Example:
   "message": "An error occurred while creating the account. Please try again later.",
   "error": "error_message_here"
 }
-
-``
 ```
 
 ## User Login API
@@ -110,7 +108,7 @@ This endpoint allows users to log in by providing their email and password. The 
 The request body should be a JSON object containing the following fields:
 
 - email (string, required): The user's email address. Must be a valid email format.
-  -password (string, required): The user's password. Must be at least 6 characters long.
+- password (string, required): The user's password. Must be at least 6 characters long.
 
 # Example Request
 
@@ -183,6 +181,119 @@ The request body should be a JSON object containing the following fields:
 {
   "success": false,
   "message": "An error occurred while logging in. Please try again later.",
+  "error": "error_message_here"
+}
+```
+
+# User Profile API
+
+## Endpoint: /api/v1/users/profile
+
+### Description
+
+This endpoint allows authenticated users to retrieve their profile information.
+
+# Method GET
+
+## Headers
+
+-Authorization (string, required): The JWT token of the authenticated user.
+
+### Responses
+
+### Success
+
+-Status Code: 200 OK
+
+### Response Body:
+
+```json
+{
+  "_id": "user_id_here",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
+```
+
+## Unauthorized
+
+### Status Code: 401 Unauthorized
+
+### Response Body
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+## Server Error
+
+### Status Code: 500 Internal Server Error
+
+### Response Body:
+
+```json
+{
+  "success": false,
+  "message": "An error occurred while retrieving the profile. Please try again later.",
+  "error": "error_message_here"
+}
+```
+
+# User Logout API
+
+## Endpoint: /api/v1/users/logout
+
+### Description
+
+This endpoint allows authenticated users to log out by invalidating their JWT token.
+
+### Method GET
+
+#### Headers
+
+-Authorization (string, required): The JWT token of the authenticated user.
+
+### Responses
+
+### Success
+
+-Status Code: 200 OK
+
+### Response Body:
+
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+## Unauthorized
+
+### Status Code: 401 Unauthorized
+
+### Response Body:
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+## Server Error
+
+### Status Code: 500 Internal Server Error
+
+### Response Body:
+
+```json
+{
+  "success": false,
+  "message": "An error occurred during logout. Please try again later.",
   "error": "error_message_here"
 }
 ```
