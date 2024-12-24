@@ -197,13 +197,13 @@ This endpoint allows authenticated users to retrieve their profile information.
 
 ## Headers
 
--Authorization (string, required): The JWT token of the authenticated user.
+- Authorization (string, required): The JWT token of the authenticated user.
 
 ### Responses
 
 ### Success
 
--Status Code: 200 OK
+- Status Code: 200 OK
 
 ### Response Body:
 
@@ -256,13 +256,13 @@ This endpoint allows authenticated users to log out by invalidating their JWT to
 
 #### Headers
 
--Authorization (string, required): The JWT token of the authenticated user.
+- Authorization (string, required): The JWT token of the authenticated user.
 
 ### Responses
 
 ### Success
 
--Status Code: 200 OK
+- Status Code: 200 OK
 
 ### Response Body:
 
