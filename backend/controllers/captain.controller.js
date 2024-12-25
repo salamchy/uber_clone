@@ -1,3 +1,4 @@
+import { BlacklistTokenModel } from "../models/blacklistToken.model.js";
 import { captainModel } from "../models/captain.model.js"; 
 import { createCaptain } from "../services/captain.service.js"; 
 import { validationResult } from 'express-validator'; 
@@ -48,3 +49,67 @@ export const registerCaptain = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+
+// Controller function to handle Captain login
+export const loginCaptain = async (req, res) => {
+  try {
+    // Check for validation errors in the request body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Extract email and password from the request body
+    const { email, password } = req.body;
+
+    // Find a captain with the given email and include the password field (which is usually excluded)
+    const captain = await captainModel.findOne({ email }).select("+password");
+
+    if (!captain) {
+      // If no captain is found with the provided email, return a 400 status with an error message
+      return res.status(400).json({ error: "Invalid Credentials" });
+    }
+
+    // Compare the provided password with the hashed password stored in the database
+    const isMatch = await captain.comparePassword(password);
+
+    if (!isMatch) {
+      // If the passwords don't match, return a 400 status with an error message
+      return res.status(400).json({ error: "Invalid Credentials" });
+    }
+
+    // Generate an authentication token for the captain
+    const token = await captain.generateAuthToken();
+
+    // Set the authentication token as a cookie in the response
+    res.cookie("token", token);
+
+    // Send a success response with the token and captain details
+    res.status(200).json({ token, captain });
+
+  } catch (error) {
+    // Catch any errors during the process and return a 500 status with the error message
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while logging in. Please try again later.",
+      error: error.message, // Provide the error message for debugging (optional in production)
+    });
+  }
+};
+
+// Controller function to get the profile of the authenticated captain
+export const getCaptainProfile = async (req, res) => {
+  res.status(200).json({ captain: req.captain})
+}
+
+// Controller function to handle the logout of a captain
+export const logoutCaptain = async (req, res) => {
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  await BlacklistTokenModel.create({ token });
+
+  res.clearCookie("token");
+
+  res.status(200).json({ message: "Captain logged out successfully" });
+}
