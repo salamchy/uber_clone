@@ -103,13 +103,33 @@ export const getCaptainProfile = async (req, res) => {
   res.status(200).json({ captain: req.captain})
 }
 
-// Controller function to handle the logout of a captain
+// Controller function to handle Captain logout
 export const logoutCaptain = async (req, res) => {
-  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+  try {
+    // Extract the token from cookies or authorization header
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-  await BlacklistTokenModel.create({ token });
+    if (!token) {
+      // If no token is found, send a 400 status with an error message
+      return res.status(400).json({ error: "No token provided. Logout failed." });
+    }
 
-  res.clearCookie("token");
+    // Add the token to the blacklist to prevent its further use
+    await BlacklistTokenModel.create({ token });
 
-  res.status(200).json({ message: "Captain logged out successfully" });
-}
+    // Clear the authentication token from the cookies
+    res.clearCookie("token");
+
+    // Send a success response
+    res.status(200).json({ message: "Captain logged out successfully" });
+
+  } catch (error) {
+    // Catch any errors and return a 500 status with an error message
+    res.status(500).json({
+      success: false,
+      message: "An error occurred during logout. Please try again later.",
+      error: error.message, // Include error details for debugging (optional)
+    });
+  }
+};
+
