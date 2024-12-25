@@ -1,7 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import userRoutes from "./routes/user.routes.js"
+import userRoutes from "./routes/user.routes.js";
+import captainRoutes from "./routes/captain.routes.js";
 
 // Create an instance of an Express application
 const app = express();
@@ -29,6 +30,9 @@ app.use(cookieParser());
 
 //user routes
 app.use('/api/v1/users', userRoutes);
+
+//captain routes
+app.use('/api/v1/captains', captainRoutes);
 
 // Export the app instance for use in other modules or for starting the server
 export  { app };
