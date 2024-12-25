@@ -442,3 +442,120 @@ The request body should be a JSON object containing the following fields:
   "error": "error_message_here"
 }
 ```
+
+# Captain Profile API
+
+## Endpoint: /api/v1/captain/profile
+
+### Description
+
+This endpoint allows authenticated captains to retrieve their profile information.
+
+### Method GET
+
+### Headers
+
+- Authorization (string, required): The JWT token of the authenticated captain.
+
+### Responses Success
+
+- Status Code: 200 OK
+
+### Response Body:
+
+```json
+{
+  "captain": {
+    "_id": "captain_id_here",
+    "fullName": {
+      "firstName": "Jane",
+      "lastName": "Doe"
+    },
+    "email": "jane.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plateNumber": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+### Unauthorized
+
+- Status Code: 401 Unauthorized
+
+### Response Body:
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### Server Error
+
+- Status Code: 500 Internal Server Error
+
+### Response Body:
+
+```json
+{
+  "success": false,
+  "message": "An error occurred while retrieving the profile. Please try again later.",
+  "error": "error_message_here"
+}
+```
+
+# Captain Logout API
+
+## Endpoint: /api/v1/captain/logout
+
+### Description
+
+This endpoint allows authenticated captains to log out by invalidating their JWT token.
+
+### Method GET
+
+### Headers
+
+- Authorization (string, required): The JWT token of the authenticated captain.
+
+### Responses Success
+
+- Status Code: 200 OK
+
+### Response Body:
+
+```json
+{
+  "message": "Captain logged out successfully"
+}
+```
+
+### Unauthorized
+
+- Status Code: 401 Unauthorized
+
+### Response Body:
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### Server Error
+
+- Status Code: 500 Internal Server Error
+
+### Response Body:
+
+```json
+{
+  "success": false,
+  "message": "An error occurred during logout. Please try again later.",
+  "error": "error_message_here"
+}
+```
