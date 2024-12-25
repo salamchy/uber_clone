@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false
+    select: false,
+    minlength: [8, "Password must be atleast 8 characters"]
   },
   socketId : {
     type: String,
@@ -44,6 +45,5 @@ userSchema.methods.generateAuthToken = function() {
   // Return the generated token
   return token;
 };
-
 
 export const userModel = mongoose.model("userModel", userSchema);
