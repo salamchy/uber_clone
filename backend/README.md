@@ -298,9 +298,9 @@ This endpoint allows authenticated users to log out by invalidating their JWT to
 }
 ```
 
-# Captain Registration API
+# Captains Registration API
 
-## Endpoint: /api/v1/captain/register
+## Endpoint: /api/v1/captains/register
 
 ### Description
 
@@ -443,9 +443,9 @@ The request body should be a JSON object containing the following fields:
 }
 ```
 
-# Captain Profile API
+# Captains Profile API
 
-## Endpoint: /api/v1/captain/profile
+## Endpoint: /api/v1/captains/profile
 
 ### Description
 
@@ -508,9 +508,9 @@ This endpoint allows authenticated captains to retrieve their profile informatio
 }
 ```
 
-# Captain Logout API
+# Captains Logout API
 
-## Endpoint: /api/v1/captain/logout
+## Endpoint: /api/v1/captains/logout
 
 ### Description
 
